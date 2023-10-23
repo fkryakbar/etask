@@ -130,7 +130,7 @@ function CreatePlanModal({ isOpen, onOpenChange, userData }: any) {
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>
-                            <Button color="success" isDisabled={isLoading} onPress={e => { onCreatePlan(onClose) }}>
+                            <Button color="success" isDisabled={isLoading} onPress={e => { onCreatePlan(onClose) }} isLoading={isLoading}>
                                 Create
                             </Button>
                         </ModalFooter>
@@ -496,10 +496,10 @@ function PlanComponent({ planData, planId, userData }: { planData: PlanData, pla
                             }} />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="light" onPress={onDeletePlan}>
+                            <Button color="danger" variant="light" onPress={onDeletePlan} isLoading={isLoading}>
                                 Delete
                             </Button>
-                            <Button color="success" isDisabled={isLoading} onPress={e => { onUpdatePlan(onClose) }}>
+                            <Button color="success" isDisabled={isLoading} onPress={e => { onUpdatePlan(onClose) }} isLoading={isLoading}>
                                 Save
                             </Button>
                         </ModalFooter>

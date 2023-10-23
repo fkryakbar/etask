@@ -6,9 +6,11 @@ export default function SidebarMenu({ userData }: { userData: any }) {
     return (
         <>
             <div className="flex justify-between items-center">
-                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#00ff87] to-[#60efff]">
-                    eTask
-                </h1>
+                <Link href={"/"}>
+                    <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#00ff87] to-[#60efff]">
+                        eTask
+                    </h1>
+                </Link>
                 <ThemeToggler />
             </div>
             <h3 className="font-semibold text-slate-600 dark:text-slate-300">{userData.name}</h3>

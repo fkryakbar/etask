@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function About() {
     return (
-        <FirstPageLayout title="Register">
+        <FirstPageLayout title="About">
             <div className="h-screen flex justify-center items-center dark:text-white">
                 <div className="lg:w-[350px] w-full mx-5 bg-white shadow-md rounded-lg p-5 dark:bg-slate-900">
                     <div className="flex justify-between items-center">

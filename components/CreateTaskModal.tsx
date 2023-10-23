@@ -91,7 +91,7 @@ export default function CreateTaskModal({ isOpen, onOpenChange, userData }: any)
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button color="success" isDisabled={isLoading} onPress={e => onCreateTask(onClose)}>
+                                <Button color="success" isDisabled={isLoading} onPress={e => onCreateTask(onClose)} isLoading={isLoading}>
                                     Create
                                 </Button>
                             </ModalFooter>

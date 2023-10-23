@@ -14,6 +14,6 @@ const config: Config = {
   daisyui: {
     themes: ['light', 'dark']
   },
-  plugins: [require('daisyui'), nextui()],
+  plugins: [nextui()],
 }
 export default config

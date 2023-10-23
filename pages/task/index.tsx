@@ -252,10 +252,10 @@ function TaskComponent({ taskData, taskId, userData }: { taskData: TaskData, tas
                             </RadioGroup>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="light" onPress={onDeleteTask} isDisabled={isLoading}>
+                            <Button color="danger" variant="light" onPress={onDeleteTask} isDisabled={isLoading} isLoading={isLoading}>
                                 Delete
                             </Button>
-                            <Button color="success" onPress={e => { onUpdateTask(onClose) }} isDisabled={isLoading}>
+                            <Button color="success" onPress={e => { onUpdateTask(onClose) }} isDisabled={isLoading} isLoading={isLoading}>
                                 Save
                             </Button>
                         </ModalFooter>

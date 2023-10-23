@@ -1,6 +1,7 @@
 import FirstPageLayout from "@/components/Layout/FirstPageLayout";
 import { signUpNewUser } from "@/utils/Authentication";
 import { Toast } from "@/utils/Swal";
+import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -66,7 +67,11 @@ export default function Register() {
                     <p className="mt-2  text-sm">Before login to <b>eTask</b></p>
 
                     <form action="" className="mt-5" method="POST" onSubmit={onRegister}>
-                        <div className="form-control w-full max-w-xs">
+                        <Input onChange={e => { setName(e.target.value) }} className="mb-3" type="text" label="Name" placeholder="Type your name" isDisabled={isLoading} />
+                        <Input onChange={e => { setEmail(e.target.value) }} className="mb-3" type="email" label="Email" placeholder="Type your email" isDisabled={isLoading} />
+                        <Input onChange={e => { setPassword(e.target.value) }} className="mb-3" type="password" label="Password" placeholder="Choose your password" isDisabled={isLoading} />
+                        <Input onChange={e => { setConfirmPassword(e.target.value) }} className="mb-3" type="password" label="Confirm Password" placeholder="Re-type your password" isDisabled={isLoading} />
+                        {/* <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
@@ -89,11 +94,11 @@ export default function Register() {
                                 <span className="label-text">Confirm Password</span>
                             </label>
                             <input type="password" name="confirm_password" onChange={e => setConfirmPassword(e.target.value)} placeholder="Retype password" className="input input-bordered w-full max-w-xs" />
-                        </div>
+                        </div> */}
                         <div className="form-control w-full max-w-xs mt-3">
-                            <button type="submit" className="btn bg-green-400 text-white hover:bg-green-700" disabled={isLoading}>
+                            <Button className="w-full bg-green-400 text-white hover:bg-green-700 font-semibold" type="submit" isLoading={isLoading}>
                                 Create Account
-                            </button>
+                            </Button>
                         </div>
                     </form>
                     <p className="my-3 text-center text-sm">Already have an account? Click <Link className="text-green-400" href="/login">here</Link> to login</p>

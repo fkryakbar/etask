@@ -3,7 +3,7 @@ import { sigInUser, useUser } from "@/utils/Authentication";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-
+import { Button, Input } from "@nextui-org/react";
 export default function Login() {
     const router = useRouter()
     const [data, setData] = useState({
@@ -40,26 +40,12 @@ export default function Login() {
                     <p className="mt-2  text-sm">To continue to <b>eTask</b></p>
 
                     <form action="" className="mt-5" method="POST" onSubmit={onSigIn}>
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input onChange={e => {
-                                setData({ ...data, email: e.target.value })
-                            }} type="email" name="email" placeholder="Type your email" className="input input-bordered w-full max-w-xs" disabled={isLoading} />
-                        </div>
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text">Password</span>
-                            </label>
-                            <input onChange={e => {
-                                setData({ ...data, password: e.target.value })
-                            }} type="password" name="password" placeholder="Choose password" className="input input-bordered w-full max-w-xs" disabled={isLoading} />
-                        </div>
+                        <Input onChange={e => { setData({ ...data, email: e.target.value }) }} type="email" label="Email" isDisabled={isLoading} />
+                        <Input onChange={e => { setData({ ...data, password: e.target.value }) }} type="password" label="Password" className="mt-3" isDisabled={isLoading} />
                         <div className="form-control w-full max-w-xs mt-3">
-                            <button type="submit" className="btn bg-green-400 text-white hover:bg-green-700" disabled={isLoading}>
+                            <Button className="w-full bg-green-400 text-white hover:bg-green-700 font-semibold" type="submit" isLoading={isLoading}>
                                 Login
-                            </button>
+                            </Button>
                         </div>
                     </form>
                     <p className="my-3 text-center text-sm">Don&apos;t have any account? Click <Link className="text-green-400" href="/register">here</Link> to register</p>

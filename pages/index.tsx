@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import FirstPageLayout from '@/components/Layout/FirstPageLayout'
+import { Button } from "@nextui-org/react";
+import { useRouter } from 'next/router'
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [randomNum, setRandomNum] = useState(0)
+  const router = useRouter()
   useEffect(() => {
     const randomNumber = Math.random();
     setRandomNum(randomNumber)
@@ -31,8 +33,16 @@ export default function Home() {
               )
             }</p>
             <div className='flex justify-center gap-3 mt-3'>
-              <Link href={"/login"} className='btn bg-green-400 text-white hover:bg-[#60efff]'>Get Started</Link>
-              <Link href={"/about"} className='btn bg-transparent hover:bg-green-500 hover:text-white'>Learn More</Link>
+              <Button type='submit' className='bg-green-400 text-white hover:bg-[#60efff] font-semibold ' size='lg' radius='sm' onPress={e => { router.push('/login') }}>
+                <Link href={"/login"}>
+                  Get Started
+                </Link>
+              </Button>
+              <Button type='reset' className='bg-transparent hover:bg-green-500 hover:text-white font-semibold' variant='bordered' size='lg' radius='sm' onPress={e => { router.push('/about') }}>
+                <Link href={"/about"}>
+                  Learn More
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
