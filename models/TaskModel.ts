@@ -2,12 +2,8 @@ import RealtimeDB from "@/utils/RealtimeDB";
 import { Toast } from "@/utils/Swal";
 import { onValue, ref, remove, set, update } from "firebase/database";
 import { useUser } from "@/utils/Authentication"
-function generateUID() {
-    const timestamp = new Date().getTime().toString(16); // Current timestamp in hexadecimal
-    const randomPart = Math.random().toString(16).substr(2, 4); // Random 4-digit hexadecimal
-    const uid = timestamp + randomPart;
-    return uid;
-}
+import generateUID from "@/utils/GenerateUID";
+
 
 
 async function createNewTask(taskData: TaskData, userData: any) {

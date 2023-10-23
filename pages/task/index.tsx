@@ -182,19 +182,18 @@ function TaskComponent({ taskData, taskId, userData }: { taskData: TaskData, tas
     }
 
     return <>
-        <div className="mb-3 rounded-lg dark:bg-slate-900 p-5 bg-white shadow-lg hover:cursor-pointer transition-all hover:scale-[1.02]">
+        <div onClick={onOpen} className="mb-3 rounded-lg dark:bg-slate-900 p-5 bg-white shadow-lg hover:cursor-pointer transition-all hover:scale-[1.02]">
             <div className="flex justify-between items-center">
                 <div className={`${taskData.priority == 'Low' ? 'bg-green-500' : taskData.priority == 'Medium' ? 'bg-amber-500' : taskData.priority == 'High' ? 'bg-red-500' : null} p-1 rounded text-[12px] font-semibold text-slate-100`}>
                     {taskData.label}
                 </div>
-
-                <div>
+                {/* <div>
                     <Button className="bg-white dark:bg-slate-900 w-fit" size="sm" onPress={onOpen}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                         </svg>
                     </Button>
-                </div>
+                </div> */}
             </div>
             <h1 className="mt-3 font-semibold">
                 {taskData.title}
