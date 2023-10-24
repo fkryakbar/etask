@@ -24,7 +24,6 @@ export default function Task() {
     }
     if (auth.isLoading) return <AuthLoading />
     return (<>
-
         <DashboardLayout title="Task" userData={auth.userData}>
             <div className="mb-5 text-slate-700 dark:text-white">
                 <div className="flex justify-between items-center">

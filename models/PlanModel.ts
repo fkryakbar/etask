@@ -10,7 +10,7 @@ async function createNewPlan(planData: PlanData, userData: any) {
     }).catch((err) => {
         Toast.fire({
             icon: "error",
-            title: 'Error creating task, see logs for details'
+            title: 'Error creating Plan, see logs for details'
         })
     });
 
@@ -36,7 +36,7 @@ async function updatePlan(planId: string, userData: any, newPlanData: any) {
     }).catch((err) => {
         Toast.fire({
             icon: 'error',
-            title: 'Error updating task, see logs for details'
+            title: 'Error updating Plan, see logs for details'
         })
 
     });
@@ -50,7 +50,7 @@ async function deletePlan(planId: string, userData: any) {
     }).catch((err) => {
         Toast.fire({
             icon: 'error',
-            title: 'Error deleting task, see logs for details'
+            title: 'Error deleting Plan, see logs for details'
         })
 
     })
