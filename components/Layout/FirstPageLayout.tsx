@@ -20,6 +20,7 @@ export default function Layout({ children, title }: { children: ReactNode, title
     return <>
         <Head>
             <title>{title}</title>
+            <meta name="description" content='Boost your productivity with our task manager, weekly planner, memo, and Pomodoro clock app. Stay organized and focused, manage tasks, plan your week, and take notes efficiently.' />
         </Head>
         <Gradient />
         {children}

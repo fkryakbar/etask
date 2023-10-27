@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import Gradient from '@/components/Gradient'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import FirstPageLayout from '@/components/Layout/FirstPageLayout'
 import { Button } from "@nextui-org/react";
 import { useRouter } from 'next/router'

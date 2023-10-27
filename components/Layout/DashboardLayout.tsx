@@ -47,7 +47,7 @@ export default function Layout({ children, title, userData }: { children: ReactN
             <div className="lg:basis-[20%] lg:block hidden">
                 <SidebarMenu userData={userData} />
             </div>
-            <div className="lg:basis-[80%] basis-[100%]">
+            <div className="lg:basis-[80%] basis-[100%] flex flex-col">
                 {children}
             </div>
         </div>
