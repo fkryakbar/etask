@@ -4,7 +4,7 @@ import { createNewMemo, deleteMemo, getAllMemos, updateMemo } from "@/models/Mem
 import { useUser } from "@/utils/Authentication";
 import { Toast } from "@/utils/Swal";
 import { useAuth } from "@/utils/UserContext";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Skeleton, Textarea, VisuallyHidden, useDisclosure, useSwitch } from "@nextui-org/react";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Skeleton, Textarea, VisuallyHidden, useDisclosure, useSwitch } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
@@ -239,7 +239,7 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
             </div>
             <div className="mt-3 prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-0 prose-h1:text-lg prose-h2:text-lg prose-h3:text-lg prose-h4:text-lg">
                 <Markdown>
-                    {memoData.memo}
+                    {memoData.memo.replace(/\n/gi, "\n\n")}
                 </Markdown>
             </div>
         </div>
@@ -276,9 +276,9 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
                                 </ModalBody>
                             </> : <>
                                 <ModalBody className="max-h-[400px] overflow-y-auto">
-                                    <div className="mt-3 prose dark:prose-invert prose-sm prose-p:mt-2 prose-p:mb-2">
+                                    <div className="mt-3 prose dark:prose-invert prose-sm prose-p:mt-0 prose-p:mb-0 prose-p:text-xs lg:prose-p:text-sm">
                                         <Markdown>
-                                            {memoData.memo}
+                                            {memoData.memo.replace(/\n/gi, "\n\n")}
                                         </Markdown>
                                     </div>
                                 </ModalBody>
