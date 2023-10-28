@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
+import { useAuth } from "@/utils/UserContext";
 export default function Login() {
     const router = useRouter()
     const [data, setData] = useState({
@@ -22,7 +23,7 @@ export default function Login() {
 
     }
 
-    const auth = useUser();
+    const auth = useAuth()
     if (auth.isLoading == false && auth.userData) {
         router.push('/task')
     }

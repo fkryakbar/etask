@@ -3,6 +3,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { createNewMemo, deleteMemo, getAllMemos, updateMemo } from "@/models/MemoModel";
 import { useUser } from "@/utils/Authentication";
 import { Toast } from "@/utils/Swal";
+import { useAuth } from "@/utils/UserContext";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Skeleton, Textarea, VisuallyHidden, useDisclosure, useSwitch } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ export default function Memo() {
         return null;
     }
     if (auth.isLoading) return <AuthLoading />
-    return <DashboardLayout title="Memo" userData={auth.userData}>
+    return <DashboardLayout title="Memo">
         <div className="mb-5 text-slate-700 dark:text-white">
             <div className="flex justify-between items-center">
                 <div>
@@ -32,20 +33,20 @@ export default function Memo() {
                 </Button>
             </div>
             <hr className="mt-3 border-dashed border-slate-400 dark:border-slate-600" />
-            <MemosComponent userData={auth.userData} />
-            <CreateMemoModal isOpen={isOpen} onOpenChange={onOpenChange} userData={auth.userData} />
+            <MemosComponent />
+            <CreateMemoModal isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
 
     </DashboardLayout>
 }
 
-function CreateMemoModal({ isOpen, onOpenChange, userData }: any) {
+function CreateMemoModal({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) {
     const [isLoading, setIsLoading] = useState(false)
     const [memoData, setMemoData] = useState({
         title: '',
         memo: '',
     })
-
+    const { userData } = useAuth()
     async function onCreatePlan(onCloseFunction: any) {
         setIsLoading(true);
         if (memoData.title == '' || memoData.memo == '') {
@@ -104,10 +105,10 @@ function CreateMemoModal({ isOpen, onOpenChange, userData }: any) {
     </>
 }
 
-function MemosComponent({ userData }: { userData: any }) {
+function MemosComponent() {
     const [memoData, setMemoData] = useState<{ [memoId: string]: MemoData }>({})
     const [isLoading, setIsLoading] = useState(true);
-
+    const { userData } = useAuth()
     useEffect(() => {
         getAllMemos(setMemoData, setIsLoading, userData)
     }, []);
@@ -116,7 +117,7 @@ function MemosComponent({ userData }: { userData: any }) {
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 text-slate-700 dark:text-white mt-4">
             {
                 isLoading && memoData ? (<MemoLoading />) : Object.keys(memoData).map((memoId: string) => {
-                    return <MemoComponent memoData={memoData[memoId]} key={memoId} userData={userData} memoId={memoId} />
+                    return <MemoComponent memoData={memoData[memoId]} key={memoId} memoId={memoId} />
                 })
             }
             {
@@ -214,12 +215,12 @@ const EditToggler = (props: any) => {
     )
 }
 
-function MemoComponent({ memoData, memoId, userData }: { memoData: MemoData, memoId: string, userData: any }) {
+function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false)
     const [memoDataState, setMemoData] = useState(memoData)
     const [isEditMode, setIsEditMode] = useState(false)
-
+    const { userData } = useAuth()
 
     async function onDeleteMemo() {
         setIsLoading(true)
@@ -287,9 +288,6 @@ function MemoComponent({ memoData, memoId, userData }: { memoData: MemoData, mem
                             <Button color="danger" variant="light" onPress={onDeleteMemo} isLoading={isLoading}>
                                 Delete
                             </Button>
-                            {/* <Button color="success" isDisabled={isLoading} onPress={e => { onUpdatePlan(onClose) }} isLoading={isLoading}>
-                                Save
-                            </Button> */}
                         </ModalFooter>
                     </>
                 )}

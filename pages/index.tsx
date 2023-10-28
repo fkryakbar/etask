@@ -1,6 +1,3 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Gradient from '@/components/Gradient'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import FirstPageLayout from '@/components/Layout/FirstPageLayout'

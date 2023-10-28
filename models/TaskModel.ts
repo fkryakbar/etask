@@ -1,7 +1,6 @@
 import RealtimeDB from "@/utils/RealtimeDB";
 import { Toast } from "@/utils/Swal";
 import { onValue, ref, remove, set, update } from "firebase/database";
-import { useUser } from "@/utils/Authentication"
 import generateUID from "@/utils/GenerateUID";
 
 

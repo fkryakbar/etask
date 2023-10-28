@@ -21,9 +21,12 @@ export default function About() {
                         </h1>
                         <p className="text-gray-500 text-sm mt-2 dark:text-white">Something about <b>eTask</b></p>
                         <p className="mt-4 text-sm text-gray-500 dark:text-white">
+                            eTask is your all-in-one productivity and task management app designed to streamline your daily routine, enhance your task organization, and boost your productivity. Built using Next.js and powered by Firebase as a Backend as a Service (BaaS), eTask offers a seamless and robust solution for task management, scheduling, the Pomodoro technique, and note-taking.
+                        </p>
+                        <p className="mt-4 text-sm text-gray-500 dark:text-white">
                             I developed this stuff just for personal use. I can use this stuff for productivity purposes
                         </p>
-                        <p className="mt-1 text-sm text-gray-500 font-semibold dark:text-white">
+                        <p className="mt-4 text-sm text-gray-500 font-semibold dark:text-white">
                             -fkryakbar
                         </p>
                     </div>

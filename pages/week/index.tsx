@@ -3,6 +3,7 @@ import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { createNewPlan, deletePlan, getAllPlans, updatePlan } from "@/models/PlanModel";
 import { useUser } from "@/utils/Authentication";
 import { Toast } from "@/utils/Swal";
+import { useAuth } from "@/utils/UserContext";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Radio, RadioGroup, Textarea, useDisclosure, Select, SelectSection, SelectItem, Skeleton } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ import { useEffect, useState } from "react";
 export default function Week() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const router = useRouter()
-    const auth = useUser()
+    const auth = useAuth()
 
     if (auth.isLoading == false && auth.userData == null) {
         router.push('/login');
@@ -19,7 +20,7 @@ export default function Week() {
     }
     if (auth.isLoading) return <AuthLoading />
     return <>
-        <DashboardLayout title="Weekly Plan" userData={auth.userData}>
+        <DashboardLayout title="Weekly Plan">
             <div className="mb-5 text-slate-700 dark:text-white">
                 <div className="flex justify-between items-center">
                     <div>
@@ -34,8 +35,8 @@ export default function Week() {
                 </div>
                 <hr className="mt-3 border-dashed border-slate-400 dark:border-slate-600" />
             </div>
-            <PlansComponent userData={auth.userData} />
-            <CreatePlanModal isOpen={isOpen} onOpenChange={onOpenChange} userData={auth.userData} />
+            <PlansComponent />
+            <CreatePlanModal isOpen={isOpen} onOpenChange={onOpenChange} />
         </DashboardLayout>
 
 
@@ -43,8 +44,9 @@ export default function Week() {
 }
 
 
-function CreatePlanModal({ isOpen, onOpenChange, userData }: any) {
+function CreatePlanModal({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) {
     const [isLoading, setIsLoading] = useState(false)
+    const { userData } = useAuth()
     const [planData, setPlanData] = useState({
         title: '',
         day: '',
@@ -141,10 +143,10 @@ function CreatePlanModal({ isOpen, onOpenChange, userData }: any) {
     </>
 }
 
-function PlansComponent({ userData }: { userData: any }) {
+function PlansComponent() {
     const [planData, setPlanData] = useState<{ [planId: string]: PlanData }>({})
     const [isLoading, setIsLoading] = useState(true)
-
+    const { userData } = useAuth()
     useEffect(() => {
         getAllPlans(setPlanData, setIsLoading, userData)
     }, []);
@@ -159,7 +161,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Monday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -194,7 +196,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Tuesday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -229,7 +231,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Wednesday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -264,7 +266,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Thursday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -299,7 +301,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Friday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -334,7 +336,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Saturday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -369,7 +371,7 @@ function PlansComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (planData[planId].day == 'Sunday') {
                             isOnGoingAvailable = true
-                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} userData={userData} />
+                            return <PlanComponent key={planId} planId={planId} planData={planData[planId]} />
 
                         }
                     })
@@ -401,11 +403,11 @@ function PlansComponent({ userData }: { userData: any }) {
 }
 
 
-function PlanComponent({ planData, planId, userData }: { planData: PlanData, planId: string, userData: any }) {
+function PlanComponent({ planData, planId }: { planData: PlanData, planId: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false)
     const [planDataState, setPlanData] = useState(planData)
-
+    const { userData } = useAuth()
 
     async function onDeletePlan() {
         setIsLoading(true)

@@ -1,6 +1,7 @@
 import AuthLoading from "@/components/AuthLoading";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { useUser } from "@/utils/Authentication";
+import { useAuth } from "@/utils/UserContext";
 import { useDisclosure, Button, CircularProgress, Modal, ModalContent, ModalFooter, ModalBody, ModalHeader, Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -18,7 +19,7 @@ export default function Pomodoro() {
         breakTime: 5
     })
     const router = useRouter()
-    const auth = useUser()
+    const auth = useAuth()
 
     if (auth.isLoading == false && auth.userData == null) {
         router.push('/login');
@@ -26,7 +27,7 @@ export default function Pomodoro() {
     }
     if (auth.isLoading) return <AuthLoading />
 
-    return <DashboardLayout title="Pomodoro" userData={auth.userData}>
+    return <DashboardLayout title="Pomodoro">
         <div className="mb-5 text-slate-700 dark:text-white flex-grow flex flex-col">
             <div className="flex justify-between items-center">
                 <div>
@@ -44,7 +45,6 @@ export default function Pomodoro() {
             <Timer pomodoros={settings.pomodorosTotal} focusTime={settings.focusTime} breakTime={settings.breakTime} setIsStarted={setIsStarted} />
             <SettingsModal isOpen={isOpen} onOpenChange={onOpenChange} setSettings={setSettings} settings={settings} isStarted={isStarted} />
         </div>
-
     </DashboardLayout>
 }
 

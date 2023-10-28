@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link as NextLink, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import SidebarMenu from "../SidebarMenu";
+import { useAuth } from "@/utils/UserContext";
 const menuItems = [
     "Profile",
     "Dashboard",
@@ -18,10 +19,10 @@ const menuItems = [
     "Help & Feedback",
     "Log Out",
 ];
-export default function Layout({ children, title, userData }: { children: ReactNode, title: string, userData: any }) {
+export default function Layout({ children, title }: { children: ReactNode, title: string }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter()
-
+    const { userData } = useAuth()
     return <>
         <Head>
             <title>{title}</title>

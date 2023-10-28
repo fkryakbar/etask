@@ -3,6 +3,7 @@ import CreateTaskModal from "@/components/CreateTaskModal";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { deleteTask, getAllTasks, updateTask } from "@/models/TaskModel";
 import { useUser } from "@/utils/Authentication"
+import { useAuth } from "@/utils/UserContext";
 import { Button, Input, Radio, RadioGroup, Skeleton, Textarea, useDisclosure } from "@nextui-org/react";
 import {
     Modal,
@@ -16,7 +17,7 @@ import { useEffect, useState } from "react";
 export default function Task() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const router = useRouter()
-    const auth = useUser()
+    const auth = useAuth()
 
     if (auth.isLoading == false && auth.userData == null) {
         router.push('/login');
@@ -24,7 +25,7 @@ export default function Task() {
     }
     if (auth.isLoading) return <AuthLoading />
     return (<>
-        <DashboardLayout title="Task" userData={auth.userData}>
+        <DashboardLayout title="Task">
             <div className="mb-5 text-slate-700 dark:text-white">
                 <div className="flex justify-between items-center">
                     <div>
@@ -39,7 +40,7 @@ export default function Task() {
                 </div>
                 <hr className="mt-3 border-dashed border-slate-400 dark:border-slate-600" />
             </div>
-            <TasksComponent userData={auth.userData} />
+            <TasksComponent />
             <CreateTaskModal isOpen={isOpen} onOpenChange={onOpenChange} userData={auth.userData} />
         </DashboardLayout>
 
@@ -47,10 +48,10 @@ export default function Task() {
     </>)
 }
 
-function TasksComponent({ userData }: { userData: any }) {
+function TasksComponent() {
     const [taskData, setTaskData] = useState<{ [taskid: string]: TaskData }>({})
     const [isLoading, setIsLoading] = useState(true)
-
+    const { userData } = useAuth()
     useEffect(() => {
         getAllTasks(setTaskData, setIsLoading, userData);
     }, [])
@@ -65,7 +66,7 @@ function TasksComponent({ userData }: { userData: any }) {
                         let isOnGoingAvailable = false;
                         if (taskData[taskId].taskType == 'ongoing') {
                             isOnGoingAvailable = true
-                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} userData={userData} />
+                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} />
 
                         }
                     })
@@ -98,7 +99,7 @@ function TasksComponent({ userData }: { userData: any }) {
                 {
                     isLoading ? (<><LoadingTask /></>) : Object.keys(taskData).map((taskId: string) => {
                         if (taskData[taskId].taskType == 'upcoming') {
-                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} userData={userData} />
+                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} />
                         }
                     })
                 }
@@ -130,7 +131,7 @@ function TasksComponent({ userData }: { userData: any }) {
                 {
                     isLoading ? (<><LoadingTask /></>) : Object.keys(taskData).map((taskId: string) => {
                         if (taskData[taskId].taskType == 'done') {
-                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} userData={userData} />
+                            return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} />
 
                         }
                     })
@@ -161,11 +162,11 @@ function TasksComponent({ userData }: { userData: any }) {
     </>)
 }
 
-function TaskComponent({ taskData, taskId, userData }: { taskData: TaskData, taskId: string, userData: any }) {
+function TaskComponent({ taskData, taskId }: { taskData: TaskData, taskId: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false)
     const [taskDataState, setTaskData] = useState(taskData)
-
+    const { userData } = useAuth()
 
     async function onDeleteTask() {
         setIsLoading(true)
