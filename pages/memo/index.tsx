@@ -45,6 +45,7 @@ function CreateMemoModal({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChan
     const [memoData, setMemoData] = useState({
         title: '',
         memo: '',
+        updatedAt: Date.now()
     })
     const { userData } = useAuth()
     async function onCreatePlan(onCloseFunction: any) {
@@ -62,6 +63,7 @@ function CreateMemoModal({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChan
         setMemoData({
             title: '',
             memo: '',
+            updatedAt: Date.now()
         })
         setIsLoading(false);
         onCloseFunction()
@@ -112,7 +114,6 @@ function MemosComponent() {
     useEffect(() => {
         getAllMemos(setMemoData, setIsLoading, userData)
     }, []);
-
     return <>
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 text-slate-700 dark:text-white mt-4">
             {
@@ -147,6 +148,18 @@ function MemosComponent() {
 
 function MemoLoading() {
     return <>
+        <div className="mb-3 rounded-lg dark:bg-slate-900 p-5 bg-white shadow-lg">
+            <div className="flex justify-between items-center">
+                <Skeleton className="w-20 rounded-lg">
+                    <div className="w-15 h-5 rounded-lg bg-default-300"></div>
+                </Skeleton>
+            </div>
+            <h1 className="mt-3 font-semibold">
+                <Skeleton className="w-15 rounded-lg">
+                    <div className="w-15 h-6 rounded-lg bg-default-300"></div>
+                </Skeleton>
+            </h1>
+        </div>
         <div className="mb-3 rounded-lg dark:bg-slate-900 p-5 bg-white shadow-lg">
             <div className="flex justify-between items-center">
                 <Skeleton className="w-20 rounded-lg">
@@ -256,8 +269,9 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
                             isEditMode ? <>
                                 <ModalBody>
                                     <Input defaultValue={memoData.title} isRequired={true} isDisabled={isLoading} type="text" label="Title" size="sm" onChange={e => {
-                                        updateMemo(memoId, userData, { ...memoDataState, title: e.target.value });
-                                        setMemoData({ ...memoDataState, title: e.target.value });
+                                        const currentTime = Date.now();
+                                        updateMemo(memoId, userData, { ...memoDataState, title: e.target.value, updatedAt: currentTime });
+                                        setMemoData({ ...memoDataState, title: e.target.value, updatedAt: currentTime });
                                     }} />
                                     <Textarea
                                         label="Your Memo"
@@ -268,8 +282,9 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
                                         defaultValue={memoDataState.memo}
                                         defaultChecked={true}
                                         className="w-full" onChange={e => {
-                                            updateMemo(memoId, userData, { ...memoDataState, memo: e.target.value });
-                                            setMemoData({ ...memoDataState, memo: e.target.value });
+                                            const currentTime = Date.now();
+                                            updateMemo(memoId, userData, { ...memoDataState, memo: e.target.value, updatedAt: currentTime });
+                                            setMemoData({ ...memoDataState, memo: e.target.value, updatedAt: currentTime });
                                         }}
                                     />
 

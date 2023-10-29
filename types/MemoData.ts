@@ -1,4 +1,5 @@
 interface MemoData {
     title: string,
-    memo: string
+    memo: string,
+    updatedAt: number
 }
