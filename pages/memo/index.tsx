@@ -260,6 +260,14 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
     useEffect(() => {
         updateMemo(memoId, userData, debouncedInput)
     }, [debouncedInput]);
+
+
+    useEffect(() => {
+        setMemoData(memoData)
+    }, [memoData]);
+
+
+
     function changeMode(e: React.ChangeEvent<HTMLInputElement>) {
         setIsEditMode(e.target.checked);
     }
