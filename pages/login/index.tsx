@@ -3,7 +3,7 @@ import { sigInUser, useUser } from "@/utils/Authentication";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { useAuth } from "@/utils/UserContext";
 export default function Login() {
     const router = useRouter()
@@ -37,7 +37,16 @@ export default function Login() {
                             eTask
                         </h1>
                     </Link>
-                    <p className="mt-5 font-bold text-lg">Login</p>
+                    <div className="mt-5 flex items-center gap-3">
+                        <p className="font-bold text-lg">Login</p>
+                        {
+                            auth.isLoading ? (
+                                <>
+                                    <Spinner color="default" size="sm" />
+                                </>
+                            ) : null
+                        }
+                    </div>
                     <p className="mt-2  text-sm">To continue to <b>eTask</b></p>
 
                     <form action="" className="mt-5" method="POST" onSubmit={onSigIn}>
