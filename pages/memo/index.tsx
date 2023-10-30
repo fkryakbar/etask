@@ -228,11 +228,28 @@ const EditToggler = (props: any) => {
     )
 }
 
+function useDebounce<T>(value: T, delay: number): T {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
 function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState(false)
     const [memoDataState, setMemoData] = useState(memoData)
     const [isEditMode, setIsEditMode] = useState(false)
+    const debouncedInput = useDebounce(memoDataState, 500);
     const { userData } = useAuth()
 
     async function onDeleteMemo() {
@@ -240,7 +257,9 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
         await deleteMemo(memoId, userData);
         setIsLoading(false)
     }
-
+    useEffect(() => {
+        updateMemo(memoId, userData, debouncedInput)
+    }, [debouncedInput]);
     function changeMode(e: React.ChangeEvent<HTMLInputElement>) {
         setIsEditMode(e.target.checked);
     }
@@ -270,7 +289,6 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
                                 <ModalBody>
                                     <Input defaultValue={memoData.title} isRequired={true} isDisabled={isLoading} type="text" label="Title" size="sm" onChange={e => {
                                         const currentTime = Date.now();
-                                        updateMemo(memoId, userData, { ...memoDataState, title: e.target.value, updatedAt: currentTime });
                                         setMemoData({ ...memoDataState, title: e.target.value, updatedAt: currentTime });
                                     }} />
                                     <Textarea
@@ -283,7 +301,6 @@ function MemoComponent({ memoData, memoId }: { memoData: MemoData, memoId: strin
                                         defaultChecked={true}
                                         className="w-full" onChange={e => {
                                             const currentTime = Date.now();
-                                            updateMemo(memoId, userData, { ...memoDataState, memo: e.target.value, updatedAt: currentTime });
                                             setMemoData({ ...memoDataState, memo: e.target.value, updatedAt: currentTime });
                                         }}
                                     />
