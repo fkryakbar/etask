@@ -2,7 +2,6 @@ import AuthLoading from "@/components/AuthLoading";
 import CreateTaskModal from "@/components/CreateTaskModal";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import { deleteTask, getAllTasks, updateTask } from "@/models/TaskModel";
-import { useUser } from "@/utils/Authentication"
 import { useAuth } from "@/utils/UserContext";
 import { Button, Input, Radio, RadioGroup, Skeleton, Textarea, useDisclosure } from "@nextui-org/react";
 import {

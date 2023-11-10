@@ -1,3 +1,4 @@
+import addDelay from "@/utils/Delay";
 import generateUID from "@/utils/GenerateUID";
 import RealtimeDB from "@/utils/RealtimeDB";
 import { Toast } from "@/utils/Swal";
@@ -61,6 +62,7 @@ async function updateMemo(memoId: string, userData: any, newMemoData: MemoData) 
 
 async function deleteMemo(memoId: string, userData: any) {
     const memoRef = ref(RealtimeDB, 'memo/' + userData.uid + '/' + memoId);
+    await addDelay(200)
     await remove(memoRef).then(() => {
 
     }).catch((err) => {

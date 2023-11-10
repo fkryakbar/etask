@@ -2,6 +2,7 @@ import RealtimeDB from "@/utils/RealtimeDB";
 import { Toast } from "@/utils/Swal";
 import { onValue, ref, remove, set, update } from "firebase/database";
 import generateUID from "@/utils/GenerateUID";
+import addDelay from "@/utils/Delay";
 
 
 
@@ -33,8 +34,8 @@ async function getAllTasks(setTaskData: any, setIsLoading: any, userData: any) {
 
 async function deleteTask(taskId: string, uid: any) {
     const tasksRef = ref(RealtimeDB, 'task/' + uid + '/' + taskId);
+    await addDelay(200)
     await remove(tasksRef).then(() => {
-
     }).catch((err) => {
         Toast.fire({
             icon: 'error',
@@ -46,6 +47,7 @@ async function deleteTask(taskId: string, uid: any) {
 
 async function updateTask(taskId: string, uid: any, newTaskData: any) {
     const tasksRef = ref(RealtimeDB, 'task/' + uid + '/' + taskId);
+    await addDelay(200)
     await update(tasksRef, newTaskData).then(() => {
     }).catch((err) => {
         Toast.fire({

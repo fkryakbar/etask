@@ -1,3 +1,4 @@
+import addDelay from "@/utils/Delay";
 import generateUID from "@/utils/GenerateUID";
 import RealtimeDB from "@/utils/RealtimeDB";
 import { Toast } from "@/utils/Swal";
@@ -32,6 +33,7 @@ async function getAllPlans(setPlanData: any, setIsLoading: any, userData: any) {
 
 async function updatePlan(planId: string, userData: any, newPlanData: any) {
     const planRef = ref(RealtimeDB, 'plan/' + userData.uid + '/' + planId);
+    await addDelay(200)
     await update(planRef, newPlanData).then(() => {
     }).catch((err) => {
         Toast.fire({
@@ -45,6 +47,7 @@ async function updatePlan(planId: string, userData: any, newPlanData: any) {
 
 async function deletePlan(planId: string, userData: any) {
     const planRef = ref(RealtimeDB, 'plan/' + userData.uid + '/' + planId);
+    await addDelay(200)
     await remove(planRef).then(() => {
 
     }).catch((err) => {
