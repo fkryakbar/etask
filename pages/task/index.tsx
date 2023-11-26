@@ -51,6 +51,41 @@ function TasksComponent() {
     const [taskData, setTaskData] = useState<{ [taskid: string]: TaskData }>({})
     const [isLoading, setIsLoading] = useState(true)
     const { userData } = useAuth()
+
+    const [onGoingTotal, setOnGoingTotal] = useState(0);
+    const [upComingTotal, setUpComingTotal] = useState(0);
+    const [doneTotal, setDoneTotal] = useState(0);
+
+    useEffect(() => {
+        if (isLoading === false && taskData) {
+            let count = 0;
+            Object.keys(taskData).forEach((taskId) => {
+                if (taskData[taskId].taskType === 'ongoing') {
+                    count++;
+                }
+            });
+            setOnGoingTotal(count);
+        }
+        if (isLoading === false && taskData) {
+            let count = 0;
+            Object.keys(taskData).forEach((taskId) => {
+                if (taskData[taskId].taskType === 'upcoming') {
+                    count++;
+                }
+            });
+            setUpComingTotal(count);
+        }
+        if (isLoading === false && taskData) {
+            let count = 0;
+            Object.keys(taskData).forEach((taskId) => {
+                if (taskData[taskId].taskType === 'done') {
+                    count++;
+                }
+            });
+            setDoneTotal(count);
+        }
+    }, [isLoading, taskData])
+
     useEffect(() => {
         getAllTasks(setTaskData, setIsLoading, userData);
     }, [])
@@ -58,13 +93,11 @@ function TasksComponent() {
         <div className="flex lg:flex-row flex-col gap-4 text-slate-700 dark:text-white">
             <div className="flex-1">
                 <h1 className="text-xl font-bold mb-4">
-                    Ongoing
+                    Ongoing {onGoingTotal != 0 ? (<span className="dark:text-slate-700 text-slate-400">({onGoingTotal})</span>) : null}
                 </h1>
                 {
                     isLoading && taskData ? (<><LoadingTask /></>) : Object.keys(taskData).map((taskId: string) => {
-                        let isOnGoingAvailable = false;
                         if (taskData[taskId].taskType == 'ongoing') {
-                            isOnGoingAvailable = true
                             return <TaskComponent key={taskId} taskId={taskId} taskData={taskData[taskId]} />
 
                         }
@@ -93,7 +126,7 @@ function TasksComponent() {
             </div>
             <div className="flex-1">
                 <h1 className="text-xl font-bold mb-4">
-                    Upcoming
+                    Upcoming {upComingTotal != 0 ? (<span className="dark:text-slate-700 text-slate-400">({upComingTotal})</span>) : null}
                 </h1>
                 {
                     isLoading ? (<><LoadingTask /></>) : Object.keys(taskData).map((taskId: string) => {
@@ -125,7 +158,7 @@ function TasksComponent() {
             </div>
             <div className="flex-1">
                 <h1 className="text-xl font-bold mb-4">
-                    Done
+                    Done {doneTotal != 0 ? (<span className="dark:text-slate-700 text-slate-400">({doneTotal})</span>) : null}
                 </h1>
                 {
                     isLoading ? (<><LoadingTask /></>) : Object.keys(taskData).map((taskId: string) => {
